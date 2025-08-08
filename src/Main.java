@@ -1,4 +1,5 @@
 import demo.example.entity.BankAccount;
+import demo.example.exceptions.ExceededLimit;
 import demo.example.exceptions.UnSufficientBalanceException;
 import demo.example.service.BAnkAccountService;
 
@@ -25,10 +26,15 @@ public class Main {
         try{
             bankAccountService.withdrawAmount(bankAccount,200000);
         }catch (UnSufficientBalanceException e){
-            System.out.println("--------");
+            System.out.println("no paise");
+        }
+        ExceededLimit exceededLimit = new ExceededLimit("added more than account limit");
+        try {
+bankAccountService.depositAmount(bankAccount,1000);
+            System.out.println(bankAccount);
+        }catch (ExceededLimit l){
+            System.out.println(l.getMessage());
         }
 
-        bankAccountService.depositAmount(bankAccount,1000);
-        System.out.println(bankAccount);
     }
 }
